@@ -2,6 +2,10 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs'); // file system
 
+// access the port set by heroku
+// it will also work locally at port 3000
+const port = process.env.PORT || 3000;
+
 var app = express();
 
 // partials
@@ -25,15 +29,15 @@ app.use((req,res,next) => {
 });
 
 // always display maintenance on all site
-app.use((req,res,next) => {
-  res.render('maintenance.hbs',{
-    pageTitle: 'Maintenance Page',
-    // currentYear: new Date().getFullYear()
-  });
-
-  // next();// won't exit until next() is called
-  // for more info expressjs.com req
-});
+// app.use((req,res,next) => {
+//   res.render('maintenance.hbs',{
+//     pageTitle: 'Maintenance Page'
+//     // currentYear: new Date().getFullYear()
+//   });
+//
+//   // next();// won't exit until next() is called
+//   // for more info expressjs.com req
+// });
 
 // put this after maintenance use, so that maintenance is displayed even in static html
 app.use(express.static(__dirname + '/public'));
@@ -93,8 +97,8 @@ app.get('/bad', (req, res) => {
 //   });
 // });
 
-app.listen(3000, () => {
-  console.log('Server is up on port 3000!!');
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}!!`);
 });
 
 
@@ -107,3 +111,47 @@ app.listen(3000, () => {
 // git init
 // git status
 // git add package.json
+// git add public/
+// git add server.js
+// create file named .gitignore with path of folder to ignore, eg node_modules
+
+// git commit -m 'Initial commit'
+
+// check ssh Key:
+// ls -al ~/.ssh
+// generate key:
+// ssh-keygen -t rsa -b 4096 -C 'prashidha.kharel@gmail.com'
+// id_rsa should be kept in server only (private key).
+// id_rsa.pub is given to third party.
+// start up ssh agent
+// eval "$(ssh-agent -s)"
+// add this key:
+// ssh-add ~/.ssh/id_rsa
+// copy id_rsa.pub key:
+// pbcopy < ~/.ssh/id_rsa.pub
+// then paste it in github.com at creating new key option
+// test connection with github
+// ssh -T git@github.com
+// push to github, link in github:
+// git remote add origin https://github.com/cool8137/nodejs-webserver.git
+// git push -u origin master
+
+// make account in heroku.com
+// toolbelt.heroku.com to download toolbelt
+// then install heroku
+// Then check:
+// heroku help
+// Then login:
+// heroku login
+// now ssh with heroku
+// heroku keys:add
+// check keys.
+// heroku keys
+
+// test connection
+// ssh -v git@heroku.com
+
+// set the port to the PORT env variable set by heroku from process
+// then add the start script in package.json as
+// "start": "node server.js"
+// then can do npm start to also run the server
